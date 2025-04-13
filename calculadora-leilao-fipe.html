@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Leilão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f4f4f4;
+      max-width: 500px;
+      margin: auto;
+    }
+    h2 {
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Calculadora de Leilão de Carro</h2>
+
+  <label for="valorVeiculo">Valor do veículo (R$):</label>
+  <input type="number" id="valorVeiculo" step="0.01">
+
+  <label for="percentualLeiloeiro">Percentual do leiloeiro (%):</label>
+  <input type="number" id="percentualLeiloeiro" step="0.01">
+
+  <label for="despesas">Despesas administrativas (R$):</label>
+  <input type="number" id="despesas" step="0.01">
+
+  <label for="dividas">Dívidas do carro (R$):</label>
+  <input type="number" id="dividas" step="0.01">
+
+  <label for="valorFipe">Valor da Tabela FIPE (R$):</label>
+  <input type="number" id="valorFipe" step="0.01">
+
+  <button onclick="calcular()">Calcular Valor Final</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcular() {
+      const valorVeiculo = parseFloat(document.getElementById('valorVeiculo').value) || 0;
+      const percentualLeiloeiro = parseFloat(document.getElementById('percentualLeiloeiro').value) || 0;
+      const despesas = parseFloat(document.getElementById('despesas').value) || 0;
+      const dividas = parseFloat(document.getElementById('dividas').value) || 0;
+      const valorFipe = parseFloat(document.getElementById('valorFipe').value) || 0;
+
+      const comissao = valorVeiculo * (percentualLeiloeiro / 100);
+      const valorFinal = valorVeiculo + comissao + despesas + dividas;
+
+      let resultadoTexto = `Valor Final da Compra: R$ ${valorFinal.toFixed(2).replace('.', ',')}`;
+
+      if (valorFipe > 0) {
+        const percentualFipe = (valorFinal / valorFipe) * 100;
+        resultadoTexto += `<br>Percentual da Tabela FIPE pago: ${percentualFipe.toFixed(2).replace('.', ',')}%`;
+      }
+
+      document.getElementById('resultado').innerHTML = resultadoTexto;
+    }
+  </script>
+
+</body>
+</html>
